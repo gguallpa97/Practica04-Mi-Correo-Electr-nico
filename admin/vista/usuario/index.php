@@ -15,10 +15,6 @@
 
 <body>
                   <?php 
-                 
-                 //$self = $_SERVER['PHP_SELF']; //Obtenemos la página en la que nos encontramos
-                 ///header("refresh:10; url=$self"); //Refrescamos cada 300 segundos
-
                     //CONEXION A LA BASE DE DATOS
                     include '../../../config/conexionBD.php';
                     //RECUPERO EL CORREO DEL USUARIO INGRESADO
@@ -38,13 +34,7 @@
                     <ul class="nav" >
                         <li><a href=ct_about.html>INICIO</a></li>
                         
-                    
-
-                        
-                              
-
                         <li><a href="listaUsuarios.php">USUARIOS</a></li>
-
 
                         <li><a href= " ">MI CUENTA</a>
                             <ul>     
@@ -74,139 +64,94 @@
 			
         <div id = "lateral">
             
-        <!--
-        <form action="../../../js/cargarImagen.js" method="post" enctype="multipart/form-data">
+                <?php 
+                $imagen = $resultarr["usu_imagen"];
+                $carpeta = "../../../images/"; 
+                $ruta= $carpeta . $imagen;     
 
-        <p>
-
-            Seleccione  una imagen :
-
-            <input type="file" name="imagen">
-            
-            <input type="hidden" id="usuario " name="usuario" value="<?php echo $usuario ?>" />
-
-            <input type="submit" value="Establecer ">
-
-            </p>
-        </form>
-        -->
-        
-
+                ?>
                     <!--PARA COLOCAR LA IMAGEN DE NUESTRO USUARIO-->
-            <img  class="centrarImagen"src="../../../images/profile.jpg" alt="" />
-                    
-                    
-                 
+            <img  class="centrarImagen"src="<?php echo $ruta ?>" alt="" />
+                
+                <?php
 
+                $nombres = $resultarr["usu_nombres"];
+                $apellidos = $resultarr["usu_apellidos"];
+                $nombreCompleto=$nombres. '  '.$apellidos;
+                ?>
+                            
+            <h1> <?php echo $nombreCompleto?> </h1>
 
-
-
-
-
-
-                    </form>
-                    
-                    
-
-
-
-                    <?php
-
-
-
-                    $nombres = $resultarr["usu_nombres"];
-                    $apellidos = $resultarr["usu_apellidos"];
-                    $nombreCompleto=$nombres. '  '.$apellidos;
-                    ?>
-                    
-                    
-                    <h1> <?php echo $nombreCompleto?> </h1>
-
-            
-          </div>
+        </div>
             
           
 
 
 
-
-          <div >
+<!--PARA MOSTEA  LA LISTA DE CORREOS-->
+<div >
     
-         <article>
-                   <h1>MENSAJES ELECTRÓNICOS </h1>
+    <article>
+                  <h1>MENSAJES ELECTRÓNICOS </h1>
                   <form method="get" action="https://www.google.com/search" target="_blank">
                   <input type="search" name="q" placeholder="Buscar Por Remitente" >
                   <input type="submit" value ="Buscar ">  
 
-        <!--autofocus required-->
+        <body> 
 
 
-                 </form>
-                                <!--
-                                <img src="ct_photo1.png" alt="" />
-                                -->
-                                <body> 
-    <table border = 1 style="width:100%"> 
-        <tr> 
-            <th>Fecha/Hora</th> 
-            <th>Remitente</th> 
-            <th>Destinatario</th> 
-            <th>Asunto</th> 
-            <th>Mensaje</th> 
-            <th>Eliminar Mensaje</th>
+            <table border = 1 style="width:100%"> 
+                <tr> 
+                <th>Fecha/Hora</th> 
+                <th>Remitente</th> 
+                <th>Destinatario</th> 
+                <th>Asunto</th> 
+                <th>Mensaje</th> 
+                <th>Eliminar Mensaje</th>
+                </tr> 
+        
+                <!--PARA LISTAR LOS CORREOS-->       
+                <?php 
 
-            </tr> 
-            
-<?php 
+                //CONEXION A LA BASE DE DATOS
+                    //include '../../../config/conexionBD.php';
 
- //CONEXION A LA BASE DE DATOS
- include '../../../config/conexionBD.php';
-
- $sql = "SELECT * FROM correos order by usu_codigo desc"; 
+                    $sql = "SELECT * FROM correos order by usu_codigo desc"; 
  
- $result = $conn->query($sql); 
+                    $result = $conn->query($sql); 
 
- if ($result->num_rows > 0) { 
+                    if ($result->num_rows > 0) { 
     
-    while($row = $result->fetch_assoc()){ 
-        echo "<tr>"; 
-        echo " <td>" . $row["usu_fecha"] . "</td>";
-        echo " <td>" . $row['usu_remitente'] . "</td>"; 
-        echo " <td>" . $row['usu_destinatario'] . "</td>"; 
-        echo " <td>" . $row['usu_asunto'] . "</td>"; 
-        echo " <td>" . $row['usu_mensaje'] . "</td>"; 
+                    while($row = $result->fetch_assoc()){ 
+                    echo "<tr>"; 
+                    echo " <td>" . $row["usu_fecha"] . "</td>";
+                    echo " <td>" . $row['usu_remitente'] . "</td>"; 
+                    echo " <td>" . $row['usu_destinatario'] . "</td>"; 
+                    echo " <td>" . $row['usu_asunto'] . "</td>"; 
+                    echo " <td>" . $row['usu_mensaje'] . "</td>"; 
+                    echo " <td> <a href='../../controladores/usuario/eliminarMensaje.php?codigo=" . $row['usu_codigo'] . "'>Eliminar</a> </td>";
+                    } 
+                    } else { 
+                    echo "<tr>"; 
+                    echo " <td colspan='7'> NO EXISTEN CORREOS ENVIADOS POR EL USUARIO </td>"; 
+                    echo "</tr>"; 
+                    }           
+                    $conn->close(); 
+                ?>
 
-        echo " <td> <a href='../../controladores/usuario/eliminarMensaje.php?codigo=" . $row['usu_codigo'] . "'>Eliminar</a> </td>";
-        
-    } 
-} else { 
-    echo "<tr>"; 
-    echo " <td colspan='7'> NO EXISTEN CORREOS ENVIADOS POR EL USUARIO </td>"; 
-    echo "</tr>"; 
-} 
-        $conn->close(); 
+            </table> 
+        </body> 
 
-        
-       
-        ?>
+    </article>
 
-    </table> 
-    </body> 
+</div>
 
-        </article>
-
-        </div>
-
-        <footer>
+<footer>
 
         <p >&copy; TODOS LOS DERECHOS RESERVADOS</p>
         <p ></Strong> Franklin Gustavo Guallpa Giñin  <Strong> </p>
         <p ></Strong> 2019 <Strong> </p>
-                    
-        </footer>
-        
-
-        
+</footer>
 
 </body>
 </html>

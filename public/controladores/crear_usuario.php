@@ -38,10 +38,12 @@
  }else{
         $rol=$admin;
  }
- 
+ ///PARA EL ECHIVO DE TIPO FILE
+ $archivo=$_FILES["archivo"]["name"]; 
+
 
  $sql = "INSERT INTO usuario VALUES (0, '$rol','$cedula','$nombres', '$apellidos', '$direccion', '$telefono',
-'$correo','$contr', '$fechaNacimiento', 'N', null, null,null)";
+'$correo','$contr', '$fechaNacimiento', 'N', null, null,'$archivo')";
 
  if ($conn->query($sql) === TRUE) {
  echo "<p>GUARDADO EXITOSO</p>";
@@ -53,6 +55,7 @@
  }
  }
  
+
  //cerrar la base de datos
  $conn->close();
  

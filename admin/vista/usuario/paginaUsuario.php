@@ -73,37 +73,26 @@
 			
         <div id = "lateral">
         
-                    <!--PARA COLOCAR LA IMAGEN DE NUESTRO USUARIO-->
-                    <img  class="centrarImagen"src="../../../images/profile.jpg" alt="" />
-                    
-                    <!--PARA SELECIONAR  LA IMAGEN DE NUESTRO USUARIO-->
-                    <form enctype="multipart/form-data" action=" " method="POST">
+                 <?php 
+                $imagen = $resultarr["usu_imagen"];
+                $carpeta = "../../../images/"; 
+                $ruta= $carpeta . $imagen;     
+                ?>
+                      <!--PARA COLOCAR LA IMAGEN DE NUESTRO USUARIO-->
+            <img  class="centrarImagen"src="<?php echo $ruta ?>" alt="" />
+                
+                <?php
+                $nombres = $resultarr["usu_nombres"];
+                $apellidos = $resultarr["usu_apellidos"];
+                $nombreCompleto=$nombres. '  '.$apellidos;
+                ?>
+                         
+            <h1> <?php echo $nombreCompleto?> </h1>   
 
-                    <input name="uploadedfile" type="file">
-
-                    <input type="submit" value="Subir archivo">
-                    
-                    </form>
-                    
-                    
-                    <?php
-                    $nombres = $resultarr["usu_nombres"];
-                    $apellidos = $resultarr["usu_apellidos"];
-                    $nombreCompleto=$nombres. '  '.$apellidos;
-                    ?>
-                    
-                    
-                    <h1> <?php echo $nombreCompleto?> </h1>
-
-            
           </div>
             
-          
 
-
-
-
-          <div >
+<div >
     
          <article>
                    <h1>MENSAJES RECIBIDOS </h1>
