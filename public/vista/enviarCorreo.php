@@ -41,7 +41,7 @@
 
                 <input type="submit" value="Enviar Correo " id="btnSend">
 
-                <button type="reset" onclick="history.back()" >Cancelar</button>
+                <button class="boton_personalizado"  type="reset" onclick="history.back()" >Cancelar</button>
             
             </div>
         </form>

@@ -104,14 +104,15 @@
                                 <img src="ct_photo1.png" alt="" />
                                 -->
                    </form>
-                   <br>
-                   <body> 
+                   
+<body> 
+    <br> 
     <table border = 1 style="width:100%"> 
         <tr> 
             <th>Fecha/Hora</th> 
             <th>Remitente</th> 
             <th>Asunto</th> 
-            <th>Mensaje</th> 
+            <th>Leer</th> 
             
             </tr> 
             
@@ -131,7 +132,7 @@
         echo " <td>" . $row["usu_fecha"] . "</td>";
         echo " <td>" . $row['usu_remitente'] . "</td>"; 
         echo " <td>" . $row['usu_asunto'] . "</td>"; 
-        echo " <td>" . $row['usu_mensaje'] . "</td>"; 
+        echo " <td> <a href='../../controladores/usuario/leerMensaje.php?mensaje=" . $row['usu_mensaje'] . "'>Leer</a> </td>";
 
     } 
 } else { 

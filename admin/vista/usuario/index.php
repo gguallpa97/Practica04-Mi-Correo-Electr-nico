@@ -93,20 +93,13 @@
     
     <article>
                   <h1>MENSAJES ELECTRÓNICOS </h1>
-                  <form method="get" action="https://www.google.com/search" target="_blank">
-                  <input type="search" name="q" placeholder="Buscar Por Remitente" >
-                  <input type="submit" value ="Buscar ">  
-
         <body> 
-
-
             <table border = 1 style="width:100%"> 
                 <tr> 
                 <th>Fecha/Hora</th> 
                 <th>Remitente</th> 
                 <th>Destinatario</th> 
                 <th>Asunto</th> 
-                <th>Mensaje</th> 
                 <th>Eliminar Mensaje</th>
                 </tr> 
         
@@ -128,7 +121,6 @@
                     echo " <td>" . $row['usu_remitente'] . "</td>"; 
                     echo " <td>" . $row['usu_destinatario'] . "</td>"; 
                     echo " <td>" . $row['usu_asunto'] . "</td>"; 
-                    echo " <td>" . $row['usu_mensaje'] . "</td>"; 
                     echo " <td> <a href='../../controladores/usuario/eliminarMensaje.php?codigo=" . $row['usu_codigo'] . "'>Eliminar</a> </td>";
                     } 
                     } else { 

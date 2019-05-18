@@ -51,7 +51,7 @@
 
         <div class="button">
             
-                <button type="reset" onclick="history.back()" >CANCELAR</button>
+                <button class="boton_personalizado"  type="reset" onclick="history.back()" >CANCELAR</button>
                 <br>
             </div>
 
