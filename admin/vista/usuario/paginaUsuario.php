@@ -33,7 +33,14 @@
                 <nav > 
                     <ul class="nav" >
                         <li><a >INICIO</a></li>
-                        <li><a href=../../../public/vista/enviarCorreo.php>NUEVO MENSAJE</a></li>
+                       
+                                <?php 
+                                 $usuario = $resultarr["usu_correo"];
+                                 $cad1 = "../../../public/vista/enviarCorreo.php?usuario=";
+                                 $final1 = $cad1 . $usuario;
+
+                                ?>
+                        <li><a href="<?php echo $final1 ?>">NUEVO MENSAJE</a></li>
 
                                 <?php 
                                  $codigo = $resultarr["usu_codigo"];
@@ -56,8 +63,16 @@
                                  $cad3 = "cambiar_contrasena.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
+                                 $cad4 = "eliminar.php?codigo=";
+                                 $final3= $cad4 . $cad2;
+
+
                                  ?>
                                     <li><a href= "<?php echo $final1 ?>" >DATOS </a></li>
+
+                                    
+                                    <li><a href= "<?php echo $final3 ?>" >ELIMINAR </a></li>
+
 
                                     <li><a href="<?php echo $final2 ?>"> CONTRASEÑA </a></li>
                             </ul>

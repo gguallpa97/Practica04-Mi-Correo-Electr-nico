@@ -28,7 +28,7 @@
  //CONEXION A LA BASE DE DATOS
  include '../../../config/conexionBD.php';
 
- $sql = "SELECT * FROM usuario where usu_rol = 'user'  "; 
+ $sql = "SELECT * FROM usuario where usu_rol = 'user' and  usu_eliminado = 'N'"; 
  $result = $conn->query($sql); 
  if ($result->num_rows > 0) { 
     

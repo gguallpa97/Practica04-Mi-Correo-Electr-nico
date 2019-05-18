@@ -48,9 +48,13 @@
                                  $final2= $cad3 . $cad2;
 
                                  ?>
+                                    
                                     <li><a href= "<?php echo $final1 ?>" >DATOS  </a></li>
 
+                                
                                     <li><a href="<?php echo $final2 ?>"> CONTRASEÑA  </a></li>
+
+
                             </ul>
                          </li>
                         

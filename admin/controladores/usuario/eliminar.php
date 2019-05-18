@@ -3,6 +3,8 @@
 <head> 
     <meta charset="UTF-8"> 
     <title>Eliminar datos de persona </title> 
+    <link rel="stylesheet" href="../../../estyles/estilos.css">
+
 </head> 
 <body> 
 <?php 
@@ -20,6 +22,9 @@ $sql = "UPDATE usuario SET usu_eliminado = 'S', usu_fecha_modificacion = '$fecha
 
 if ($conn->query($sql) === TRUE) { 
     echo "<p>USUARIO ELIMINADO CON ÉXITO </p>"; 
+    
+    header("Location: ../../../public/vista/login.html");
+
 } else {
      echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>"; 
 } 
@@ -28,7 +33,7 @@ $conn->close();
 
 ?>
 <div class="button">
-<button type="reset" onclick="history.back()" >CANCELAR</button>
+
 <br>
 </div>
 

@@ -15,7 +15,7 @@
  
   
 
- $sql="SELECT usu_rol FROM usuario WHERE usu_correo = '$usuario' and usu_password = MD5('$contrasena')";
+ $sql="SELECT usu_rol FROM usuario WHERE usu_correo = '$usuario' and usu_password = MD5('$contrasena' ) and  usu_eliminado = 'N'       " ;
  //Enviar una consulta MySQL
  $result=$conn->query($sql); 
 //Recupera una fila de resultados como un array asociativo

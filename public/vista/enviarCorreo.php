@@ -11,6 +11,10 @@
 </head>
 <body>
 
+<?php 
+    $usuario = $_GET["usuario"]; 
+?>
+
     <section class="form_wrap">
         <section class="cantact_info">
             <section class="info_title">
@@ -27,7 +31,7 @@
                 <input type="date" name="fecha" value="<?php date_default_timezone_set("America/Guayaquil"); echo date("Y-m-d");?>" disabled >
 
                 <label for="remitente">Remitente *</label>
-                <input type="text" id="remitente" name="remitente" >
+                <input type="text" id="remitente" name="remitente" value="<?php  echo $usuario ?>"  disabled  >
 
                 <label for="destinatario">Destinatario*</label>
                 <input type="text" id="destinatario" name="destinatario" >
