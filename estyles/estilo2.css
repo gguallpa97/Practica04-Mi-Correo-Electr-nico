@@ -35,6 +35,13 @@
 
 }
 
+.container {
+    width: 00px;
+    display: flex;
+    flex-direction: column;
+}
+
+
         
         
 

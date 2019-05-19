@@ -8,6 +8,15 @@
     <link href="../../../estyles/estilo.css" rel="stylesheet">
 
 </head> 
+
+
+                    
+                   
+
+
+
+
+
     <body> 
     <table border = 1 style="width:100%"> 
         <tr> 
@@ -49,11 +58,22 @@
        
         ?>
 
-        <div class="button">
+            <div class="button">
             
                 <button class="boton_personalizado"  type="reset" onclick="history.back()" >CANCELAR</button>
                 <br>
             </div>
+
+                    <form  onkeyup="return buscarPorCedula()">
+                     <h1>MENSAJES ENVIADOS </h1>
+                    <input type="hidden" id="usuario" name="usuario" value="<?php echo $usuario ?>" /> 
+                   
+                    <input type="text"  id="caja_busqueda" name="caja_busqueda"  value="" placeholder="Buscar por destinatario " >
+
+                    </form>
+                    <div  id="informacion" ><b> </b></div>
+                    <br>
+
 
         
 

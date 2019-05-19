@@ -8,6 +8,7 @@
 
         <meta charset=”utf-8” />
         <title>Pagina Usuario</title>
+        <script src="../../../js/ajax.js" type="text/javascript">  </script>
         <link href="../../../estyles/ct_layout2.css" rel= "stylesheet" />
         <link href="../../../estyles/estilo2.css" rel="stylesheet"/>
         <link href="../../../estyles/titulos.css" rel="stylesheet"/>
@@ -111,14 +112,16 @@
     
          <article>
                    <h1>MENSAJES RECIBIDOS </h1>
-                  <form method="get" action="https://www.google.com/search" target="_blank">
-                  <input type="search" name="q" placeholder="Buscar Por Remitente" >
-                  <input type="submit" value ="Buscar ">  
-                    <!--autofocus required-->
-                                <!--
-                                <img src="ct_photo1.png" alt="" />
-                                -->
-                   </form>
+                   <form  onkeyup="return buscarPorCedula()">
+
+                   <input type="hidden" id="usuario" name="usuario" value="<?php echo $usuario ?>" /> 
+                   
+                    <input type="text"  id="caja_busqueda" name="caja_busqueda"  value="" placeholder="Buscar por remitente " >
+
+                    </form>
+                    <div  id="informacion" ><b> </b></div>
+                   
+
                    
 <body> 
     <br> 
@@ -130,6 +133,7 @@
             <th>Leer</th> 
             
             </tr> 
+
             
 <?php 
 
