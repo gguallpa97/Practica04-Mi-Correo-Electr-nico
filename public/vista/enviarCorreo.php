@@ -31,10 +31,10 @@
                 <input type="date" name="fecha" value="<?php date_default_timezone_set("America/Guayaquil"); echo date("Y-m-d");?>" disabled >
 
                 <label for="remitente">Remitente *</label>
-                <input type="text" id="remitente" name="remitente" value="<?php  echo $usuario ?>"  disabled  >
+                <input type="email" id="remitente" name="remitente" value="<?php  echo $usuario ?>"  >
 
                 <label for="destinatario">Destinatario*</label>
-                <input type="text" id="destinatario" name="destinatario" >
+                <input type="email" id="destinatario" name="destinatario" >
 
                 <label for="asunto">Asunto*</label>
                 <input type="text" id="asunto" name="asunto" >

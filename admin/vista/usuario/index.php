@@ -1,3 +1,11 @@
+<?php 
+
+    session_start(); 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE){ 
+     header("Location: /GestionDeUsuarios/public/vista/login.html"); 
+        } 
+?>
+
 <!DOCTYPE html>
 <html>
 <head>  
@@ -32,11 +40,11 @@
         <div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
-                        <li><a href=ct_about.html>INICIO</a></li>
+                        <li><a >INICIO</a></li>
                         
                         <li><a href="listaUsuarios.php">USUARIOS</a></li>
 
-                        <li><a href= " ">MI CUENTA</a>
+                        <li><a  >MI CUENTA</a>
                             <ul>     
                                  <?php 
                                  $codigo = $resultarr["usu_codigo"];

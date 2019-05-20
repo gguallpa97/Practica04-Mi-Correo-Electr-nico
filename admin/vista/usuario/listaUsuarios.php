@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html> 
 <html> 
 <head> 
@@ -58,7 +59,8 @@
 
         <div class="button">
             
-                <button  class="boton_personalizado"  type="reset" onclick="history.back()" >CANCELAR</button>
+                <button  class="boton_personalizado"  type="regresar" onclick="history.back()" >CANCELAR</button>
+                
                 <br>
             </div>
 

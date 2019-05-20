@@ -19,8 +19,11 @@ $resultarr=mysqli_fetch_assoc($result);
 $attempts = $resultarr["usu_rol"];
 
 if($attempts == 'admin'){
+
        echo "NO SE PUEDE ENVIAR , EL CORREO PERTENECE A UN USUARIO ADMINISTRADOR ";
       // echo "<a href='../vista/enviarCorreo.php'>REGRESAR </a>";
+      ///header("Location: ../../../public/vista/login.html");
+      
 }else{
 
 // Datos para el correo
@@ -59,4 +62,10 @@ if ($conn->query($sql) === TRUE) {
 
 
 
+
 ?>
+<div class="button">
+<button type="reset" onclick="history.back()" >REGRESAR </button>
+<br>
+</div>
+
