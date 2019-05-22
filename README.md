@@ -8,5 +8,4 @@ OBJETIVO ALCANZADO: Resolver problemas sobre PHP y MySQL
 • Entender y organizar de una mejor manera los sitios de web en Internet 
 • Diseñar adecuadamente elementos gráficos en sitios web en Internet. 
 • Crear sitios web aplicando estándares actuales. 
-************IMPORTANTE ANTES DEL EJECUTAR EL SITIO WEB
-AL MOMENTO DE CREAR EL USUARIO , PARA LA SELECCION DE LA IMAGEN SE DEBE REDIGIR A LA CARPETA images, dentro del proyecto.
+
