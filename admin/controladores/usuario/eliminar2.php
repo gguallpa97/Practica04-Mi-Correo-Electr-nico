@@ -23,9 +23,7 @@ $sql = "UPDATE usuario SET usu_eliminado = 'S', usu_fecha_modificacion = '$fecha
 if ($conn->query($sql) === TRUE) { 
     echo "<p>USUARIO ELIMINADO CON ÉXITO </p>"; 
     
-
-    header("Location: ../../vista/usuario/listaUsuarios.php");
-
+    header("Location: ../../../public/vista/login.html");
 
 } else {
      echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>"; 

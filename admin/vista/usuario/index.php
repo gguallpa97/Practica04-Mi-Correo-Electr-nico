@@ -1,17 +1,17 @@
-<?php 
 
-    session_start(); 
-    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE){ 
-     header("Location: /GestionDeUsuarios/public/vista/login.html"); 
+<?php 
+session_start(); 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'user' ){ 
+        header("Location: /GestionDeUsuarios/public/vista/login.html"); 
         } 
 ?>
+
 
 <!DOCTYPE html>
 <html>
 <head>  
-
         <meta charset=”utf-8” />
-        <title>Pagina Usuario</title>
+        <title>INICIO</title>
         <script src="../../../js/cargarImagen.js" type="text/javascript">  </script>
         <link href="../../../estyles/ct_layout2.css" rel= "stylesheet" />
         <link href="../../../estyles/estilo2.css" rel="stylesheet"/>
@@ -26,7 +26,8 @@
                     //CONEXION A LA BASE DE DATOS
                     include '../../../config/conexionBD.php';
                     //RECUPERO EL CORREO DEL USUARIO INGRESADO
-                    $usuario=$_POST["usuario"]; 
+
+                    $usuario=$_SESSION['admin']; 
  
                     $sql="SELECT * FROM usuario WHERE usu_correo = '$usuario' ";
                      //Enviar una consulta MySQL
@@ -40,7 +41,8 @@
         <div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
-                        <li><a >INICIO</a></li>
+                        <li><a href="index.php">INICIO</a></li>
+
                         
                         <li><a href="listaUsuarios.php">USUARIOS</a></li>
 

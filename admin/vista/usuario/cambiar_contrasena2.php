@@ -10,34 +10,39 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>  
-
-
         <meta charset=”utf-8” />
-        <title>MENSAJES ENVIADOS </title>
-        <script src="../../../js/ajax.js" type="text/javascript">  </script>
+        <title>ACTUALIZAR CONTRASEÑA </title>
+        <script src="../../../js/cargarImagen.js" type="text/javascript">  </script>
         <link href="../../../estyles/ct_layout2.css" rel= "stylesheet" />
         <link href="../../../estyles/estilo2.css" rel="stylesheet"/>
         <link href="../../../estyles/titulos.css" rel="stylesheet"/>
         <link href="../../../estyles/imagenes.css" rel="stylesheet"/>
+        <link href="../../../estyles/estilo.css" rel="stylesheet">
+        
+         
                 
 </head>
+
 <body>
                   <?php 
                     //CONEXION A LA BASE DE DATOS
                     include '../../../config/conexionBD.php';
-                  //RECUPERO EL CORREO DEL USUARIO INGRESADO
-                    $usuario=$_SESSION['user'];
+                    //RECUPERO EL CORREO DEL USUARIO INGRESADO
 
+                    $usuario=$_SESSION['user']; 
+ 
                     $sql="SELECT * FROM usuario WHERE usu_correo = '$usuario' ";
                      //Enviar una consulta MySQL
                      $result=$conn->query($sql); 
                       //Recupera una fila de resultados como un array asociativo
                     $resultarr=mysqli_fetch_assoc($result);
                     //Obtnemos el valo de una fila especifico
+
+
                     ?>
 
                     
-        <div id ="contenido">  
+<div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
                         <li><a href="paginaUsuario.php">INICIO</a></li>
@@ -71,7 +76,7 @@ session_start();
                                  $cad3 = "cambiar_contrasena2.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
-                                 $cad4 = "eliminar.php?codigo=";
+                                 $cad4 = "eliminar2.php?codigo=";
                                  $final3= $cad4 . $cad2;
 
 
@@ -91,107 +96,75 @@ session_start();
                      </ul>
                 </nav>
         </div>  
-        
-  
+
+<!--PARA MOSTEA  LA LISTA DE CORREOS-->
+<div >
     
-         <article>
-                   <h1>MENSAJES ENVIADOS </h1>
-                  
-                   <?php 
+    <article>
+                  <h1>ACTUALIZAR LA CONTRASEÑA </h1>
 
-//CONEXION A LA BASE DE DATOS
-include '../../../config/conexionBD.php';
+                  <body> 
+     <?php 
+     $codigo = $resultarr["usu_codigo"];
+     ?> 
+     
+     <form id="formulario01" method="POST" action="../../controladores/usuario/cambiar_contrasena2.php"> 
+     <legend><Strong>ACTUALIZAR SU CONTRASEÑA </Strong> </legend> <br> 
+     <input type="hidden" id="codigo" name="codigo" value="<?php echo $codigo ?>" /> 
+     
+     <label for="cedula">Contraseña Actual (*)</label> 
+     <input type="password" id="contrasena1" name="contrasena1" value="" required placeholder="Ingrese su contraseña actual ..."/> <br> 
+     
+     
+     <label for="cedula">Contraseña Nueva (*)</label> 
+     <input type="password" id="contrasena2" name="contrasena2" value="" required placeholder="Ingrese su contraseña nueva ..."/> <br> 
+     
+     <div class="button">
 
-        $usuario=$_SESSION['user'];
+            <br> 
+                <button type="submit">Cambiar Contraseña</button>
+            
+                
+            </div>
 
- 
-?>
-
-               <form  onkeyup="return buscarPorCedula2()">
-
-                   <input type="hidden" id="usuario" name="usuario" value="<?php echo $usuario ?>" /> 
-                  
-                   <input type="text"  id="caja_busqueda2" name="caja_busqueda2"  value="%" placeholder="Buscar por destinatario " >
-
-                   </form>
-                   <div  id="informacion" ><b> </b></div>
-                   <br>
-
-                   
-<!--
-   <body> 
-   <table border = 1 style="width:100%"> 
-       <tr> 
-           <th>Fecha</th> 
-           <th>Destinatario</th> 
-           <th>Asunto</th> 
-           <th>Mensaje</th> 
-           </tr> 
-           
-<?php 
-
-$sql = "SELECT * FROM correos where usu_remitente= '$usuario' order by usu_fecha  desc "; 
+     </form> 
+    
+     
+</body> 
 
 
+    </article>
 
-$result = $conn->query($sql); 
+</div>
 
-if ($result->num_rows > 0) { 
-   
-   while($row = $result->fetch_assoc()){ 
-       echo "<tr>"; 
-       echo " <td>" . $row["usu_fecha"] . "</td>";
-       echo " <td>" . $row['usu_destinatario'] . "</td>"; 
-       echo " <td>" . $row['usu_asunto'] . "</td>"; 
-       echo " <td> <a href='../../controladores/usuario/leerMensaje.php?mensaje=" . $row['usu_mensaje'] . "'>Leer</a> </td>";
-
-   } 
-} else { 
-   echo "<tr>"; 
-   echo " <td colspan='7'> NO EXISTEN CORREOS ENVIADOS POR EL USUARIO </td>"; 
-   echo "</tr>"; 
-} 
-       $conn->close(); 
-
-       
-      
-       ?>
-
-           
-
-
-
-
-       
-
-       
-       
-   </table> 
-   </body> 
--->
-       
-        </article>
-
-
-
-        </div>
-
-        <footer>
+<footer>
 
         <p >&copy; TODOS LOS DERECHOS RESERVADOS</p>
         <p ></Strong> Franklin Gustavo Guallpa Giñin  <Strong> </p>
         <p ></Strong> 2019 <Strong> </p>
-                    
-        </footer>
-    
+</footer>
+
 </body>
 </html>
 
-<script type="text/javascript" >
-       window.onload=function(){
-            // Una vez cargada la página, el formulario se enviara automáticamente.
-            setTimeout('buscarPorCedula2()',1);
-          
-}
 
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

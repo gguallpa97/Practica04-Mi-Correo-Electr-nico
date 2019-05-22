@@ -1,7 +1,7 @@
 
 <?php 
 session_start(); 
-    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'admin' ){ 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE){ 
         header("Location: /GestionDeUsuarios/public/vista/login.html"); 
         } 
 ?>
@@ -10,41 +10,46 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>  
-
-
         <meta charset=”utf-8” />
-        <title>MENSAJES ENVIADOS </title>
-        <script src="../../../js/ajax.js" type="text/javascript">  </script>
+        <title>ACTUALIZAR DATOS </title>
+        <script src="../../../js/cargarImagen.js" type="text/javascript">  </script>
         <link href="../../../estyles/ct_layout2.css" rel= "stylesheet" />
         <link href="../../../estyles/estilo2.css" rel="stylesheet"/>
         <link href="../../../estyles/titulos.css" rel="stylesheet"/>
         <link href="../../../estyles/imagenes.css" rel="stylesheet"/>
+        <link href="../../../estyles/estilo.css" rel="stylesheet">
+        
+         
                 
 </head>
+
 <body>
                   <?php 
                     //CONEXION A LA BASE DE DATOS
                     include '../../../config/conexionBD.php';
-                  //RECUPERO EL CORREO DEL USUARIO INGRESADO
-                    $usuario=$_SESSION['user'];
+                    //RECUPERO EL CORREO DEL USUARIO INGRESADO
 
+                    $usuario=$_SESSION['user']; 
+ 
                     $sql="SELECT * FROM usuario WHERE usu_correo = '$usuario' ";
                      //Enviar una consulta MySQL
                      $result=$conn->query($sql); 
                       //Recupera una fila de resultados como un array asociativo
                     $resultarr=mysqli_fetch_assoc($result);
                     //Obtnemos el valo de una fila especifico
+
+
                     ?>
 
                     
-        <div id ="contenido">  
+<div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
-                        <li><a href="paginaUsuario.php">INICIO</a></li>
+                        <li><a href="../../vista/usuario/paginaUsuario.php">INICIO</a></li>
                        
                                 <?php 
                                  $usuario = $resultarr["usu_correo"];
-                                 $cad1 = "enviarCorreo.php?usuario=";
+                                 $cad1 = "../../vista/usuario/enviarCorreo.php?usuario=";
                                  $final1 = $cad1 . $usuario;
 
                                 ?>
@@ -52,7 +57,7 @@ session_start();
 
                                 <?php 
                                  $codigo = $resultarr["usu_codigo"];
-                                 $cad1 = "listaMensajesEnviados.php?usuario=";
+                                 $cad1 = "../../vista/usuario/listaMensajesEnviados.php?usuario=";
                                  $final = $cad1 . $usuario;
 
                                  ?>
@@ -64,14 +69,14 @@ session_start();
                             <ul>     
                                  <?php 
                                  $codigo = $resultarr["usu_codigo"];
-                                 $cad1 = "modificar2.php?codigo=";
+                                 $cad1 = "../../vista/usuario/modificar2.php?codigo=";
                                  $cad2 = $codigo;
                                  $final1 = $cad1 . $cad2;
 
-                                 $cad3 = "cambiar_contrasena2.php?codigo=";
+                                 $cad3 = "../../vista/usuario/cambiar_contrasena2.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
-                                 $cad4 = "eliminar.php?codigo=";
+                                 $cad4 = "../../vista/usuario/eliminar2.php?codigo=";
                                  $final3= $cad4 . $cad2;
 
 
@@ -91,107 +96,122 @@ session_start();
                      </ul>
                 </nav>
         </div>  
-        
-  
-    
-         <article>
-                   <h1>MENSAJES ENVIADOS </h1>
-                  
-                   <?php 
 
-//CONEXION A LA BASE DE DATOS
+<!--PARA MOSTEA  LA LISTA DE CORREOS-->
+<div >
+    
+    <article>
+                  <h1>ACTUALIZAR LOS DATOS  </h1>
+
+                  <body> 
+<?php 
+//incluir conexión a la base de datos 
 include '../../../config/conexionBD.php';
 
-        $usuario=$_SESSION['user'];
+$codigo = $resultarr["usu_codigo"];
 
- 
-?>
+$cedula = isset($_POST["cedula"]) ? trim($_POST["cedula"]) : null;
+$nombres = isset($_POST["nombres"]) ? mb_strtoupper(trim($_POST["nombres"]), 'UTF-8') : null;
+$apellidos = isset($_POST["apellidos"]) ? mb_strtoupper(trim($_POST["apellidos"]), 'UTF-8') : null; 
+$direccion = isset($_POST["direccion"]) ? mb_strtoupper(trim($_POST["direccion"]), 'UTF-8') : null; 
+$telefono = isset($_POST["telefono"]) ? trim($_POST["telefono"]): null;
+$correo = isset($_POST["correo"]) ? trim($_POST["correo"]): null;
+$fechaNacimiento = isset($_POST["fechaNacimiento"]) ? trim($_POST["fechaNacimiento"]): null; 
 
-               <form  onkeyup="return buscarPorCedula2()">
+date_default_timezone_set("America/Guayaquil"); 
+$fecha = date('Y-m-d H:i:s', time()); 
 
-                   <input type="hidden" id="usuario" name="usuario" value="<?php echo $usuario ?>" /> 
-                  
-                   <input type="text"  id="caja_busqueda2" name="caja_busqueda2"  value="%" placeholder="Buscar por destinatario " >
-
-                   </form>
-                   <div  id="informacion" ><b> </b></div>
-                   <br>
-
-                   
-<!--
-   <body> 
-   <table border = 1 style="width:100%"> 
-       <tr> 
-           <th>Fecha</th> 
-           <th>Destinatario</th> 
-           <th>Asunto</th> 
-           <th>Mensaje</th> 
-           </tr> 
-           
-<?php 
-
-$sql = "SELECT * FROM correos where usu_remitente= '$usuario' order by usu_fecha  desc "; 
-
-
-
-$result = $conn->query($sql); 
-
-if ($result->num_rows > 0) { 
-   
-   while($row = $result->fetch_assoc()){ 
-       echo "<tr>"; 
-       echo " <td>" . $row["usu_fecha"] . "</td>";
-       echo " <td>" . $row['usu_destinatario'] . "</td>"; 
-       echo " <td>" . $row['usu_asunto'] . "</td>"; 
-       echo " <td> <a href='../../controladores/usuario/leerMensaje.php?mensaje=" . $row['usu_mensaje'] . "'>Leer</a> </td>";
-
-   } 
+$sql = "UPDATE usuario " . 
+        "SET usu_cedula = '$cedula', " . 
+        "usu_nombres = '$nombres', " . 
+        "usu_apellidos = '$apellidos', " . 
+        "usu_direccion = '$direccion', " . 
+        "usu_telefono = '$telefono', " . 
+        "usu_correo = '$correo', " . 
+        "usu_fecha_nacimiento = '$fechaNacimiento', " . 
+        "usu_fecha_modificacion = '$fecha' " . 
+        "WHERE usu_codigo = $codigo"; 
+        
+if ($conn->query($sql) === TRUE) {
+     echo "DATOS ACTUALIZADOS CORRECTAMENTE<br>"; 
 } else { 
-   echo "<tr>"; 
-   echo " <td colspan='7'> NO EXISTEN CORREOS ENVIADOS POR EL USUARIO </td>"; 
-   echo "</tr>"; 
+    echo "Error: " . $sql . "<br>" . mysqli_error($conn) . "<br>"; 
 } 
-       $conn->close(); 
 
-       
-      
-       ?>
-
-           
+            
 
 
 
+$conn->close(); 
 
-       
+?> 
 
-       
-       
-   </table> 
-   </body> 
--->
-       
-        </article>
+
+</body> 
 
 
 
-        </div>
 
-        <footer>
+    </article>
+
+</div>
+
+<footer>
 
         <p >&copy; TODOS LOS DERECHOS RESERVADOS</p>
         <p ></Strong> Franklin Gustavo Guallpa Giñin  <Strong> </p>
         <p ></Strong> 2019 <Strong> </p>
-                    
-        </footer>
-    
+</footer>
+
 </body>
 </html>
 
-<script type="text/javascript" >
-       window.onload=function(){
-            // Una vez cargada la página, el formulario se enviara automáticamente.
-            setTimeout('buscarPorCedula2()',1);
-          
-}
 
-</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

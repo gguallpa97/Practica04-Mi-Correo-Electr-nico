@@ -20,7 +20,9 @@ $sql = "DELETE FROM correos WHERE usu_codigo = '$codigo'";
 ///$sql = "UPDATE usuario SET usu_eliminado = 'S', usu_fecha_modificacion = '$fecha' WHERE usu_codigo = $codigo"; 
 
 if ($conn->query($sql) === TRUE) { 
-    echo "<p>MENSAJE ELIMINADO CON EXITO  </p>"; 
+    //echo "<p>MENSAJE ELIMINADO CON EXITO  </p>"; 
+    header("Location: ../../vista/usuario/index.php");
+
 } else {
      echo "<p>Error: " . $sql . "<br>" . mysqli_error($conn) . "</p>"; 
 } 

@@ -1,7 +1,7 @@
 
 <?php 
 session_start(); 
-    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'user'  ){ 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE){ 
         header("Location: /GestionDeUsuarios/public/vista/login.html"); 
         } 
 ?>
@@ -45,19 +45,19 @@ session_start();
         <div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
-                        <li><a href="index.php">INICIO</a></li>
+                        <li><a href="../../vista/usuario/index.php">INICIO</a></li>
                         
-                        <li><a href="listaUsuarios.php">USUARIOS</a></li>
+                        <li><a href="../../vista/usuario/listaUsuarios.php">USUARIOS</a></li>
 
                         <li><a  >MI CUENTA</a>
                             <ul>     
                                  <?php 
                                  $codigo = $resultarr["usu_codigo"];
-                                 $cad1 = "modificar.php?codigo=";
+                                 $cad1 = "../../vista/usuario/modificar.php?codigo=";
                                  $cad2 = $codigo;
                                  $final1 = $cad1 . $cad2;
 
-                                 $cad3 = "cambiar_contrasena.php?codigo=";
+                                 $cad3 = "../../vista/usuario/cambiar_contrasena.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
                                  ?>
@@ -83,70 +83,62 @@ session_start();
     <article>
                   <h1>ACTUALIZAR LOS DATOS  </h1>
 
-  <body> 
-    <?php 
-    $codigo = $resultarr["usu_codigo"];
+                  <body> 
+<?php 
+//incluir conexión a la base de datos 
+include '../../../config/conexionBD.php';
 
+$codigo = $_POST["codigo"]; 
+
+
+$contrasena1 = isset($_POST["contrasena1"]) ? trim($_POST["contrasena1"]) : null; 
     
-    $sql = "SELECT * FROM usuario where usu_codigo=$codigo"; 
-    
-    include '../../../config/conexionBD.php'; 
-    $result = $conn->query($sql); 
+$contrasena2 = isset($_POST["contrasena2"]) ? trim($_POST["contrasena2"]) : null; 
 
-    if ($result->num_rows > 0) { 
-        while($row = $result->fetch_assoc()) { 
-        ?> 
-            
-            
-            <form id="formulario01" method="POST" action="../../controladores/usuario/modificar.php"> 
-            <legend><Strong> ACTUALIZAR DATOS DEL USUARIO </Strong> </legend> <br> 
-            <input type="hidden" id="codigo" name="codigo" value="<?php echo $codigo ?>" /> 
-            
-            <label for="cedula">Cedula (*)</label> 
-            <input type="text" id="cedula" name="cedula" value="<?php echo $row["usu_cedula"]; ?>" /> <br> 
 
-            <label for="nombres">Nombres (*)</label> 
-            <input type="text" id="nombres" name="nombres" value="<?php echo $row["usu_nombres"]; ?>" /> <br> 
-            
-            <label for="apellidos">Apelidos (*)</label>
-            <input type="text" id="apellidos" name="apellidos" value="<?php echo $row["usu_apellidos"]; ?>" /> <br> 
-            
-            <label for="direccion">Dirección (*)</label> 
-            <input type="text" id="direccion" name="direccion" value="<?php echo $row["usu_direccion"]; ?>" /> <br> 
-            
-            <label for="telefono">Teléfono (*)</label> 
-            <input type="text" id="telefono" name="telefono" value="<?php echo $row["usu_telefono"]; ?>" /> <br> 
-            
-            <label for="fecha">Fecha Nacimiento (*)</label> 
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" value="<?php echo $row["usu_fecha_nacimiento"]; ?>" /> <br> 
-            
-            <label for="correo">Correo electrónico (*)</label> 
-            <input type="email" id="correo" name="correo" value="<?php echo $row["usu_correo"]; ?>" /> <br> 
-            
-            
-            <div class="button">
 
-            <br> 
-                <button type="submit">ACTUALIZAR</button>
-                <!--
-                <button type="reset" onclick="history.back()" >Cancelar</button>
-                -->
-            </div>
-             
-        
-            </form> 
-            <?php 
-            } 
-            } else { 
-                echo "<p>Ha ocurrido un error inesperado !</p>";    
-                 echo "<p>" . mysqli_error($conn) . "</p>"; 
+$sqlContrasena1 = "SELECT * FROM usuario where usu_codigo=$codigo and usu_password=MD5('$contrasena1')"; 
 
-            } 
-            $conn->close(); 
-        
-            ?> 
-        
-    </body> 
+
+
+$result1 = $conn->query($sqlContrasena1); 
+
+
+if ($result1->num_rows> 0) { 
+
+date_default_timezone_set("America/Guayaquil"); 
+$fecha = date('Y-m-d H:i:s', time()); 
+
+$sqlContrasena2 = "UPDATE usuario " . 
+                    "SET usu_password = MD5('$contrasena2'), " . 
+                    "usu_fecha_modificacion = '$fecha' " . 
+                    "WHERE usu_codigo = $codigo"; 
+
+                    
+if ($conn->query($sqlContrasena2) === TRUE) { 
+    echo "CONTRASEÑA MODIFICADA CON ÉXITO <br>"; 
+    header("Location: ../../vista/usuario/listaUsuarios.php");
+
+} else { 
+    echo "<p>Error: " . mysqli_error($conn) . "</p>"; 
+}
+}else{ 
+echo "<p>La contraseña actual no coincide con nuestros registros!!! </p>"; 
+} 
+
+
+
+            
+
+
+
+$conn->close(); 
+
+?> 
+
+
+</body> 
+
 
 
 
@@ -163,6 +155,35 @@ session_start();
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

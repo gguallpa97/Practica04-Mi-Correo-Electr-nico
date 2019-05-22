@@ -17,8 +17,9 @@ include '../../../config/conexionBD.php';
     
     $salida = "";
 
-    $query = "SELECT * FROM correos WHERE usu_remitente LIKE '$consulta%' and usu_destinatario = '$usuario' ";
-    
+    $query = "SELECT * FROM correos WHERE usu_remitente LIKE '$consulta%' and usu_destinatario = '$usuario' order by usu_fecha desc ";
+	//echo $query;
+
 
     $resultado = $conn->query($query);
 

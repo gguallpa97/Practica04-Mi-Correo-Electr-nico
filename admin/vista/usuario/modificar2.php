@@ -1,7 +1,7 @@
 
 <?php 
 session_start(); 
-    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'user'  ){ 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'admin'){ 
         header("Location: /GestionDeUsuarios/public/vista/login.html"); 
         } 
 ?>
@@ -29,7 +29,7 @@ session_start();
                     include '../../../config/conexionBD.php';
                     //RECUPERO EL CORREO DEL USUARIO INGRESADO
 
-                    $usuario=$_SESSION['admin']; 
+                    $usuario=$_SESSION['user']; 
  
                     $sql="SELECT * FROM usuario WHERE usu_correo = '$usuario' ";
                      //Enviar una consulta MySQL
@@ -42,32 +42,53 @@ session_start();
                     ?>
 
                     
-        <div id ="contenido">  
+                       
+<div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
-                        <li><a href="index.php">INICIO</a></li>
-                        
-                        <li><a href="listaUsuarios.php">USUARIOS</a></li>
+                        <li><a href="paginaUsuario.php">INICIO</a></li>
+                       
+                                <?php 
+                                 $usuario = $resultarr["usu_correo"];
+                                 $cad1 = "enviarCorreo.php?usuario=";
+                                 $final1 = $cad1 . $usuario;
 
-                        <li><a  >MI CUENTA</a>
+                                ?>
+                        <li><a href="<?php echo $final1 ?>">NUEVO MENSAJE</a></li>
+
+                                <?php 
+                                 $codigo = $resultarr["usu_codigo"];
+                                 $cad1 = "listaMensajesEnviados.php?usuario=";
+                                 $final = $cad1 . $usuario;
+
+                                 ?>
+
+
+                        <li><a href= "<?php echo $final ?>" >MENS. ENVIADOS </a></li>
+
+                        <li><a >MI CUENTA</a>
                             <ul>     
                                  <?php 
                                  $codigo = $resultarr["usu_codigo"];
-                                 $cad1 = "modificar.php?codigo=";
+                                 $cad1 = "modificar2.php?codigo=";
                                  $cad2 = $codigo;
                                  $final1 = $cad1 . $cad2;
 
-                                 $cad3 = "cambiar_contrasena.php?codigo=";
+                                 $cad3 = "cambiar_contrasena2.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
+                                 $cad4 = "eliminar2.php?codigo=";
+                                 $final3= $cad4 . $cad2;
+
+
                                  ?>
+                                    <li><a href= "<?php echo $final1 ?>" >DATOS </a></li>
+
                                     
-                                    <li><a href= "<?php echo $final1 ?>" >DATOS  </a></li>
-
-                                
-                                    <li><a href="<?php echo $final2 ?>"> CONTRASEÑA  </a></li>
+                                    <li><a href= "<?php echo $final3 ?>" >ELIMINAR </a></li>
 
 
+                                    <li><a href="<?php echo $final2 ?>"> CONTRASEÑA </a></li>
                             </ul>
                          </li>
                         
@@ -76,6 +97,7 @@ session_start();
                      </ul>
                 </nav>
         </div>  
+         
 
 <!--PARA MOSTEA  LA LISTA DE CORREOS-->
 <div >
@@ -98,7 +120,7 @@ session_start();
         ?> 
             
             
-            <form id="formulario01" method="POST" action="../../controladores/usuario/modificar.php"> 
+            <form id="formulario01" method="POST" action="../../controladores/usuario/modificar2.php"> 
             <legend><Strong> ACTUALIZAR DATOS DEL USUARIO </Strong> </legend> <br> 
             <input type="hidden" id="codigo" name="codigo" value="<?php echo $codigo ?>" /> 
             

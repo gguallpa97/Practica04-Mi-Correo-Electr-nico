@@ -1,8 +1,9 @@
 form {
     /* Sólo para centrar el formulario a la página */
-    margin: 0 auto;
+    margin:  auto;
     width: 500px;
     /* Para ver el borde del formulario */
+    margin-top: 50px;
     padding: 1em;
     border: 10px solid darkblue;
     border-radius:1em;

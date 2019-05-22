@@ -13,12 +13,13 @@ session_start();
 
 
         <meta charset=”utf-8” />
-        <title>MENSAJES ENVIADOS </title>
+        <title>NUEVO MENSAJE</title>
         <script src="../../../js/ajax.js" type="text/javascript">  </script>
         <link href="../../../estyles/ct_layout2.css" rel= "stylesheet" />
         <link href="../../../estyles/estilo2.css" rel="stylesheet"/>
         <link href="../../../estyles/titulos.css" rel="stylesheet"/>
         <link href="../../../estyles/imagenes.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="../../../estyles/estilos.css">
                 
 </head>
 <body>
@@ -71,7 +72,7 @@ session_start();
                                  $cad3 = "cambiar_contrasena2.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
-                                 $cad4 = "eliminar.php?codigo=";
+                                 $cad4 = "eliminar2.php?codigo=";
                                  $final3= $cad4 . $cad2;
 
 
@@ -95,80 +96,61 @@ session_start();
   
     
          <article>
-                   <h1>MENSAJES ENVIADOS </h1>
-                  
-                   <?php 
+                   
+                   <body>
 
-//CONEXION A LA BASE DE DATOS
-include '../../../config/conexionBD.php';
-
-        $usuario=$_SESSION['user'];
-
- 
+<?php 
+    $usuario = $_GET["usuario"]; 
 ?>
 
-               <form  onkeyup="return buscarPorCedula2()">
+    <section class="form_wrap">
+        <section class="cantact_info">
+            <!--
+            <section class="info_title">
+            
+                
+            <span class="fa fa-user-circle"></span>
+                <h2>ENVIAR SU CORREO <br>ELECTRÓNICO </h2>
+            </section>
+            -->
+        </section>
 
-                   <input type="hidden" id="usuario" name="usuario" value="<?php echo $usuario ?>" /> 
-                  
-                   <input type="text"  id="caja_busqueda2" name="caja_busqueda2"  value="%" placeholder="Buscar por destinatario " >
+        <form action="../../controladores/usuario/enviar.php" method="post" class="form_contact">
+            
+        <!--<h2>DATOS </h2>-->    
+        
+            <div class="user_info">
+                <label for="fecha">Fecha *</label>
+                <input type="date" name="fecha" value="<?php date_default_timezone_set("America/Guayaquil"); echo date("Y-m-d");?>" disabled >
 
-                   </form>
-                   <div  id="informacion" ><b> </b></div>
-                   <br>
+                <label for="remitente">Remitente *</label>
+                <input type="email" id="remitente" name="remitente" value="<?php  echo $usuario ?>"  >
 
+                <label for="destinatario">Destinatario*</label>
+                <input type="email" id="destinatario" name="destinatario" >
+
+                <label for="asunto">Asunto*</label>
+                <input type="text" id="asunto" name="asunto" >
+
+
+                <label for="mensaje">Mensaje *</label>
+                <textarea id="mensaje" name="mensaje" required> </textarea>
+
+                <input type="submit" value="Enviar Correo " id="btnSend">
+
+            
+            
+            </div>
+        </form>
+
+    </section>
+
+</body>       
                    
-<!--
-   <body> 
-   <table border = 1 style="width:100%"> 
-       <tr> 
-           <th>Fecha</th> 
-           <th>Destinatario</th> 
-           <th>Asunto</th> 
-           <th>Mensaje</th> 
-           </tr> 
-           
-<?php 
 
-$sql = "SELECT * FROM correos where usu_remitente= '$usuario' order by usu_fecha  desc "; 
+    
 
 
-
-$result = $conn->query($sql); 
-
-if ($result->num_rows > 0) { 
-   
-   while($row = $result->fetch_assoc()){ 
-       echo "<tr>"; 
-       echo " <td>" . $row["usu_fecha"] . "</td>";
-       echo " <td>" . $row['usu_destinatario'] . "</td>"; 
-       echo " <td>" . $row['usu_asunto'] . "</td>"; 
-       echo " <td> <a href='../../controladores/usuario/leerMensaje.php?mensaje=" . $row['usu_mensaje'] . "'>Leer</a> </td>";
-
-   } 
-} else { 
-   echo "<tr>"; 
-   echo " <td colspan='7'> NO EXISTEN CORREOS ENVIADOS POR EL USUARIO </td>"; 
-   echo "</tr>"; 
-} 
-       $conn->close(); 
-
-       
-      
-       ?>
-
-           
-
-
-
-
-       
-
-       
-       
-   </table> 
-   </body> 
--->
        
         </article>
 
@@ -186,12 +168,3 @@ if ($result->num_rows > 0) {
     
 </body>
 </html>
-
-<script type="text/javascript" >
-       window.onload=function(){
-            // Una vez cargada la página, el formulario se enviara automáticamente.
-            setTimeout('buscarPorCedula2()',1);
-          
-}
-
-</script>

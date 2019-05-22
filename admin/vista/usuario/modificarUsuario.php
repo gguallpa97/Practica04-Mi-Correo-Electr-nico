@@ -1,7 +1,7 @@
 
 <?php 
 session_start(); 
-    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'user'  ){ 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE){ 
         header("Location: /GestionDeUsuarios/public/vista/login.html"); 
         } 
 ?>
@@ -85,7 +85,7 @@ session_start();
 
   <body> 
     <?php 
-    $codigo = $resultarr["usu_codigo"];
+    $codigo = $_GET["codigo"]; 
 
     
     $sql = "SELECT * FROM usuario where usu_codigo=$codigo"; 
@@ -98,7 +98,7 @@ session_start();
         ?> 
             
             
-            <form id="formulario01" method="POST" action="../../controladores/usuario/modificar.php"> 
+            <form id="formulario01" method="POST" action="../../controladores/usuario/modificarUsuario.php"> 
             <legend><Strong> ACTUALIZAR DATOS DEL USUARIO </Strong> </legend> <br> 
             <input type="hidden" id="codigo" name="codigo" value="<?php echo $codigo ?>" /> 
             

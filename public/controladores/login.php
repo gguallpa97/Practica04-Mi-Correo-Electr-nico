@@ -1,4 +1,5 @@
 
+
 <?php 
  session_start();
 
@@ -21,23 +22,18 @@
 
  if ($result->num_rows>0) { 
         $_SESSION['isLogged']=TRUE;
+
         if( $attempts == 'admin' ){
-               
-               ?>    
-               <form name="miformulario" method="POST"  action="../../admin/vista/usuario/index.php"> 
-               <input type="hidden"  id="usuario" name="usuario" value= "<?php echo $usuario ?>"  /> 
-               </form>
-               <?php 
+              $_SESSION['admin'] = $usuario;
+              $_SESSION['privilegios'] = 'admin';
 
+              header("Location: ../../admin/vista/usuario/index.php");
 
-
-  
         } else{
-              ?>    
-              <form name="miformulario" method="POST"  action="../../admin/vista/usuario/paginaUsuario.php"> 
-              <input type="hidden"  id="usuario" name="usuario" value= "<?php echo $usuario ?>"  /> 
-              </form>
-              <?php 
+
+              $_SESSION['user'] = $usuario;
+              $_SESSION['privilegios'] = 'user';
+              header("Location: ../../admin/vista/usuario/paginaUsuario.php");
 
         }
         
@@ -55,14 +51,8 @@
 
 
  
- <script type="text/javascript" >
-       window.onload=function(){
-            // Una vez cargada la página, el formulario se enviara automáticamente.
-          document.forms["miformulario"].submit();
-          
-}
 
-</script>
+
 
 
 

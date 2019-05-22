@@ -1,13 +1,17 @@
+<?php 
+session_start(); 
+    if(!isset($_SESSION['isLogged']) || $_SESSION['isLogged'] === FALSE || $_SESSION['privilegios'] === 'admin' ){ 
+        header("Location: /GestionDeUsuarios/public/vista/login.html"); 
+        } 
+?>
 
 
 
 <!DOCTYPE html>
 <html>
 <head>  
-
-
         <meta charset=”utf-8” />
-        <title>Pagina Usuario</title>
+        <title>INICIO</title>
         <script src="../../../js/ajax.js" type="text/javascript">  </script>
         <link href="../../../estyles/ct_layout2.css" rel= "stylesheet" />
         <link href="../../../estyles/estilo2.css" rel="stylesheet"/>
@@ -20,7 +24,8 @@
                     //CONEXION A LA BASE DE DATOS
                     include '../../../config/conexionBD.php';
                   //RECUPERO EL CORREO DEL USUARIO INGRESADO
-                    $usuario=$_POST["usuario"]; 
+                    $usuario=$_SESSION['user'];
+
                     $sql="SELECT * FROM usuario WHERE usu_correo = '$usuario' ";
                      //Enviar una consulta MySQL
                      $result=$conn->query($sql); 
@@ -33,11 +38,11 @@
         <div id ="contenido">  
                 <nav > 
                     <ul class="nav" >
-                        <li><a >INICIO</a></li>
+                        <li><a href="paginaUsuario.php">INICIO</a></li>
                        
                                 <?php 
                                  $usuario = $resultarr["usu_correo"];
-                                 $cad1 = "../../../public/vista/enviarCorreo.php?usuario=";
+                                 $cad1 = "enviarCorreo.php?usuario=";
                                  $final1 = $cad1 . $usuario;
 
                                 ?>
@@ -57,14 +62,14 @@
                             <ul>     
                                  <?php 
                                  $codigo = $resultarr["usu_codigo"];
-                                 $cad1 = "modificar.php?codigo=";
+                                 $cad1 = "modificar2.php?codigo=";
                                  $cad2 = $codigo;
                                  $final1 = $cad1 . $cad2;
 
-                                 $cad3 = "cambiar_contrasena.php?codigo=";
+                                 $cad3 = "cambiar_contrasena2.php?codigo=";
                                  $final2= $cad3 . $cad2;
 
-                                 $cad4 = "eliminar.php?codigo=";
+                                 $cad4 = "eliminar2.php?codigo=";
                                  $final3= $cad4 . $cad2;
 
 
@@ -112,17 +117,17 @@
     
          <article>
                    <h1>MENSAJES RECIBIDOS </h1>
-                   <form  onkeyup="return buscarPorCedula()">
+                   <form name="miformulario"  onkeyup="return buscarPorCedula()">
 
                    <input type="hidden" id="usuario" name="usuario" value="<?php echo $usuario ?>" /> 
                    
-                    <input type="text"  id="caja_busqueda" name="caja_busqueda"  value="" placeholder="Buscar por remitente " >
+                    <input type="text"  id="caja_busqueda" name="caja_busqueda"  value="%" placeholder="Buscar por remitente " >
 
                     </form>
                     <div  id="informacion" ><b> </b></div>
                    
 
-                   
+ <!--                  
 <body> 
     <br> 
     <table border = 1 style="width:100%"> 
@@ -134,13 +139,13 @@
             
             </tr> 
 
-            
+         
 <?php 
 
  //CONEXION A LA BASE DE DATOS
  include '../../../config/conexionBD.php';
 
- $sql = "SELECT * FROM correos where usu_destinatario= '$usuario' order by usu_codigo desc "; 
+ $sql = "SELECT * FROM correos where usu_destinatario= '$usuario' "; 
  
  $result = $conn->query($sql); 
 
@@ -156,7 +161,7 @@
     } 
 } else { 
     echo "<tr>"; 
-    echo " <td colspan='7'> NO EXISTEN CORREOS ENVIADOS POR EL USUARIO </td>"; 
+    echo " <td colspan='7'> NO EXISTEN CORREOS RECIBIDOS </td>"; 
     echo "</tr>"; 
 } 
         $conn->close(); 
@@ -167,7 +172,7 @@
 
     </table> 
     </body> 
-
+-->
 
        
         </article>
@@ -184,3 +189,12 @@
     
 </body>
 </html>
+
+<script type="text/javascript" >
+       window.onload=function(){
+            // Una vez cargada la página, el formulario se enviara automáticamente.
+            setTimeout('buscarPorCedula()',1);
+          
+}
+
+</script>
